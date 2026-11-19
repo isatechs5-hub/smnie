@@ -1,0 +1,6 @@
+{
+  "name": "National Institute of Engineering & Management (NIEM)",
+  "description": "Official academic portal for the National Institute of Engineering & Management (NIEM), established in 1994. Explore engineering, management, diploma, and international safety programmes, apply online, verify student records, and access the student and administration portals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
