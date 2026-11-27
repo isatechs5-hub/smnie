@@ -21,13 +21,20 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ title, description }) => {
     setMeta('meta[name="twitter:title"]', fullTitle);
     setMeta('meta[name="twitter:description"]', description);
 
+    const isPrimaryDomain =
+      window.location.hostname === 'smnie.in' || window.location.hostname === 'www.smnie.in';
+    const canonicalOrigin = isPrimaryDomain ? 'https://www.smnie.in' : window.location.origin;
+    const canonicalUrl = `${canonicalOrigin}${window.location.pathname}`;
+
+    setMeta('meta[property="og:url"]', canonicalUrl);
+
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `${window.location.origin}${window.location.pathname}`);
+    canonical.setAttribute('href', canonicalUrl);
   }, [title, description]);
 
   return null;

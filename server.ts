@@ -1,30 +1,13 @@
 import 'dotenv/config';
 import path from 'path';
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
-import apiRouter from './src/server/routes.ts';
+import { createApiApp } from './src/server/app.ts';
 
 async function startServer() {
-  const app = express();
+  const app = createApiApp();
   const PORT = Number(process.env.PORT || 3000);
   const isProd = process.env.NODE_ENV === 'production';
-
-  app.set('trust proxy', 1);
-
-  // Basic security headers
-  app.use((_req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    next();
-  });
-
-  app.use(express.json({ limit: '2mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '2mb' }));
-  app.use(cookieParser());
-
-  // Mount API routes
-  app.use('/api', apiRouter);
 
   if (!isProd) {
     const vite = await createViteServer({

@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
@@ -83,8 +84,11 @@ import { dispatchNotification } from './mailer.ts';
 
 const router = express.Router();
 
-// Legacy private uploads directory (fallback read-only for older pre-Hostzens Storage files)
-const PRIVATE_UPLOAD_DIR = path.resolve(process.cwd(), 'private_uploads');
+// Legacy private uploads directory (fallback read-only locally; writable /tmp on Vercel/Netlify Lambda)
+const PRIVATE_UPLOAD_DIR =
+  process.env.VERCEL || process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME
+    ? path.join(os.tmpdir(), 'niem_private_uploads')
+    : path.resolve(process.cwd(), 'private_uploads');
 
 // All application documents/images are uploaded directly into Hostzens.com Storage (niem-media)
 const upload = multer({

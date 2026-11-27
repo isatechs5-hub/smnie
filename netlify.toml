@@ -1,0 +1,41 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  included_files = ["public/assets/aistudio/**"]
+
+# Canonical apex-to-www redirect for smnie.in
+[[redirects]]
+  from = "https://smnie.in/*"
+  to = "https://www.smnie.in/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://smnie.in/*"
+  to = "https://www.smnie.in/:splat"
+  status = 301
+  force = true
+
+# Route all /api/* requests to the Express Netlify Serverless Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# SPA client-side routing fallback for all non-API routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
