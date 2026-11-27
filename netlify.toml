@@ -7,19 +7,6 @@
   node_bundler = "esbuild"
   included_files = ["public/assets/aistudio/**"]
 
-# Canonical apex-to-www redirect for smnie.in
-[[redirects]]
-  from = "https://smnie.in/*"
-  to = "https://www.smnie.in/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "http://smnie.in/*"
-  to = "https://www.smnie.in/:splat"
-  status = 301
-  force = true
-
 # Route all /api/* requests to the Express Netlify Serverless Function
 [[redirects]]
   from = "/api/*"
