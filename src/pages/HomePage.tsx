@@ -55,9 +55,9 @@ export const HomePage: React.FC = () => {
         records: [],
       })),
     ]).then(([cData, aData, accData]) => {
-      setCourses(cData.courses.slice(0, 6));
-      setAnnouncements(aData.announcements);
-      setAccreditations(accData.records);
+      setCourses(Array.isArray(cData?.courses) ? cData.courses.slice(0, 6) : []);
+      setAnnouncements(Array.isArray(aData?.announcements) ? aData.announcements : []);
+      setAccreditations(Array.isArray(accData?.records) ? accData.records : []);
     });
   }, []);
 
